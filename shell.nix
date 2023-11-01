@@ -6,9 +6,8 @@ pkgs.mkShell {
   buildInputs = with pkgs; [
     pkgs.clang
     pkgs.cmake
-    pkgs.glibc
     pkgs.ninja
-    pkgs.valgrind
+    pkgs.lldb
   ];
 
   shellHook = ''
