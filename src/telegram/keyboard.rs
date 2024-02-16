@@ -1,3 +1,4 @@
+use std::fmt::Debug;
 use teloxide::types::{InlineKeyboardButton, InlineKeyboardMarkup};
 use url::Url;
 
@@ -19,6 +20,14 @@ pub enum KeyboardError {
 impl From<url::ParseError> for KeyboardError {
     fn from(_: url::ParseError) -> Self {
         KeyboardError::URLParseError
+    }
+}
+
+impl Debug for KeyboardError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            KeyboardError::URLParseError => write!(f, "Provided URL is not valid"),
+        }
     }
 }
 
