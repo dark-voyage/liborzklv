@@ -12,33 +12,57 @@ impl Default for Keyboard {
     }
 }
 
+pub enum KeyboardError {
+    URLParseError,
+}
+
+impl From<url::ParseError> for KeyboardError {
+    fn from(_: url::ParseError) -> Self {
+        KeyboardError::URLParseError
+    }
+}
+
 impl Keyboard {
+    /// Initialize an empty keyboard
     pub fn new() -> Self {
         Self {
             keyboard: vec![vec![]],
         }
     }
 
-    /// Add a text callback to keyboard
-    pub fn text(&mut self, text: &String, callback: &String) -> InlineKeyboardMarkup {
-        self.keyboard
-            .last_mut()
-            .unwrap()
-            .push(InlineKeyboardButton::callback(text, callback));
+    /// Add a button to keyboard
+    pub fn add(&mut self, button: InlineKeyboardButton) {
+        match self.keyboard.last_mut() {
+            Some(row) => row.push(button),
+            None => self.keyboard.push(vec![button]),
+        }
+    }
 
+    /// Add a text callback to keyboard
+    pub fn text<T>(&mut self, text: T, callback: T) -> InlineKeyboardMarkup
+    where
+        T: ToString,
+    {
+        self.add(InlineKeyboardButton::callback(
+            text.to_string(),
+            callback.to_string(),
+        ));
         self.get()
     }
 
     /// Add an url button to keyboard
-    pub fn url(&mut self, text: &String, url: &String) -> InlineKeyboardMarkup {
-        let parsed_url = Url::parse(&url).unwrap();
+    pub fn url<T>(&mut self, text: T, url: T) -> Result<InlineKeyboardMarkup, KeyboardError>
+    where
+        T: ToString,
+    {
+        let parsed_url = match Url::parse(&url.to_string()) {
+            Ok(url) => url,
+            Err(_) => return Err(KeyboardError::URLParseError),
+        };
 
-        self.keyboard
-            .last_mut()
-            .unwrap()
-            .push(InlineKeyboardButton::url(text, parsed_url));
+        self.add(InlineKeyboardButton::url(text.to_string(), parsed_url));
 
-        self.get()
+        Ok(self.get())
     }
 
     /// Add next buttons from new line
@@ -58,17 +82,73 @@ mod tests {
     use super::*;
 
     #[test]
-    fn json() {
+    fn test_text_button() {
         let mut keyboard = Keyboard::new();
-        keyboard.url(
-            &"Shaxsiy Chat".to_string(),
-            &"https://t.me/rustlanguz".to_string(),
-        );
+        let text = "Example Text".to_string();
+        let callback_data = "callback_data".to_string();
+
+        keyboard.text(&text, &callback_data);
 
         assert_eq!(
-            serde_json::to_string(&keyboard.get()).unwrap(),
-            "{\"inline_keyboard\":[[{\"text\":\"Shaxsiy Chat\",\"url\":\"https://t.me/rustlanguz\"}]]}"
+            keyboard.get(),
+            InlineKeyboardMarkup::new(vec![vec![InlineKeyboardButton::callback(
+                text,
+                callback_data
+            )]])
         );
+    }
+
+    #[test]
+    fn test_url_button() {
+        let mut keyboard = Keyboard::new();
+        let text = "Visit Rust".to_string();
+        let url = "https://www.rust-lang.org".to_string();
+
+        let _ = keyboard.url(&text, &url);
+
+        assert_eq!(
+            keyboard.get(),
+            InlineKeyboardMarkup::new(vec![vec![InlineKeyboardButton::url(
+                text,
+                Url::parse(&url).unwrap()
+            )]])
+        );
+    }
+
+    #[test]
+    fn test_row_creation() {
+        let mut keyboard = Keyboard::new();
+        keyboard.row(); // Create a new row
+
+        // Assert that a new row was added
+        let expected_keyboard = InlineKeyboardMarkup::new(vec![vec![], vec![]]); // Empty keyboard with two rows
+        assert_eq!(keyboard.get(), expected_keyboard);
+    }
+
+    #[test]
+    fn test_multiple_buttons_and_rows() {
+        let mut keyboard = Keyboard::new();
+        let text_button = "Button 1".to_string();
+        let callback_data = "callback_1".to_string();
+        let url_button = "Button 2".to_string();
+        let url = "https://example.com".to_string();
+
+        // Add a text button
+        keyboard.text(&text_button, &callback_data);
+        // Add a new row
+        keyboard.row();
+        // Add a URL button in the new row
+        let _ = keyboard.url(&url_button, &url);
+
+        let expected_keyboard = InlineKeyboardMarkup::new(vec![
+            vec![InlineKeyboardButton::callback(text_button, callback_data)],
+            vec![InlineKeyboardButton::url(
+                url_button,
+                Url::parse(&url).unwrap(),
+            )],
+        ]);
+
+        assert_eq!(keyboard.get(), expected_keyboard);
     }
 }
 
