@@ -33,17 +33,3 @@ impl Topics for Bot {
         }
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use teloxide::types::InputMessageContent::Text;
-    use super::*;
-
-    #[test]
-    fn request() {
-        // write a test that checks if the request is created correctly by comparing json
-
-        let bot = Bot::new("token");
-        let message = Message::ne;
-    }
-}
