@@ -1,5 +1,5 @@
 use std::fmt::Debug;
-use teloxide::types::{InlineKeyboardButton, InlineKeyboardMarkup};
+use teloxide::types::{InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo};
 use url::Url;
 
 #[derive(Clone, Debug, PartialEq)]
@@ -100,7 +100,7 @@ impl Keyboard {
             .push(InlineKeyboardButton::web_app(
                 text,
                 WebAppInfo {
-                    url: Url::from_str(link).unwrap(),
+                    url: Url::parse(link).unwrap(),
                 },
             ));
 
