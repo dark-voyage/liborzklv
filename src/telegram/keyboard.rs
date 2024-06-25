@@ -92,7 +92,7 @@ impl Keyboard {
 
         self.get()
     }
-    
+
     pub fn web_app(&mut self, text: &str, link: &str) -> InlineKeyboardMarkup {
         self.keyboard
             .last_mut()
