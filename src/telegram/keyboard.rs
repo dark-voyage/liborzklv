@@ -84,6 +84,28 @@ impl Keyboard {
     pub fn get(&self) -> InlineKeyboardMarkup {
         InlineKeyboardMarkup::new(self.keyboard.clone())
     }
+
+    pub fn switch_inline_current(&mut self, text: &str, query: &str) -> InlineKeyboardMarkup {
+        self.keyboard.last_mut().unwrap().push(
+            InlineKeyboardButton::switch_inline_query_current_chat(text, query),
+        );
+
+        self.get()
+    }
+    
+    pub fn web_app(&mut self, text: &str, link: &str) -> InlineKeyboardMarkup {
+        self.keyboard
+            .last_mut()
+            .unwrap()
+            .push(InlineKeyboardButton::web_app(
+                text,
+                WebAppInfo {
+                    url: Url::from_str(link).unwrap(),
+                },
+            ));
+
+        self.get()
+    }
 }
 
 #[cfg(test)]
