@@ -2,8 +2,8 @@
 name = "orzklv"
 version = "0.0.6"
 edition = "2021"
-homepage = "https://github.com/orzklv/liborzklv"
-repository = "https://github.com/orzklv/liborzklv"
+homepage = "https://github.com/dark-voyage/liborzklv"
+repository = "https://github.com/dark-voyage/liborzklv"
 description = "Library consisting various implementation for std and libs by Orzklv"
 authors = ["Sokhibjon Orzikulov <orzklv.uz>"]
 keywords = ["liborzklv", "orzklv"]
