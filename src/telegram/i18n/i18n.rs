@@ -2,7 +2,7 @@ use super::language::Language;
 use std::collections::HashMap;
 
 #[derive(Debug, Clone, Default)]
-struct I18n {
+pub struct I18n {
     users: HashMap<i64, String>,
     pub languages: HashMap<String, Language>,
 }
@@ -48,7 +48,7 @@ impl I18n {
 mod test {
     use super::*;
 
-   #[test]
+    #[test]
     fn test_i18n_init() {
         // Create instance and load locales
         let mut i18n = I18n::new();
@@ -67,7 +67,7 @@ mod test {
         let mut i18n = I18n::new();
         i18n.load_translations();
 
-        // 
+        //
         i18n.add_user(123123123123, "en");
 
         // Let's try sending request

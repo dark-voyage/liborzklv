@@ -29,7 +29,6 @@ impl Language {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
