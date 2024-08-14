@@ -1,5 +1,7 @@
 use super::language::Language;
 use std::collections::HashMap;
+use std::io::BufRead;
+use crate::telegram::i18n::I18nError;
 
 #[derive(Debug, Clone, Default)]
 pub struct I18n {
@@ -12,22 +14,33 @@ impl I18n {
         I18n::default()
     }
 
-    pub fn load_translations(&mut self) -> () {
-        let locales = std::fs::read_dir("locales").unwrap();
+    pub fn load_translations(&mut self) -> Result<(), I18nError> {
+        let locales = std::fs::read_dir("locales")?;
 
         for locale in locales {
-            let safe = locale.unwrap();
+            let safe = locale?;
 
             let path = safe.path();
-            let file = path.to_str().unwrap();
+            let file = match path.to_str() {
+                Some(c) => c,
+                None => continue
+            };
 
             let mut language = Language::new();
             language.parse_translation(file);
 
-            let name = file.split("/").last().unwrap().split(".").next().unwrap();
+            let name = file
+                .split("/")
+                .last()
+                .unwrap()
+                .split(".")
+                .next()
+                .unwrap();
 
             self.languages.insert(name.to_owned(), language);
         }
+
+        Ok(())
     }
 
     pub fn add_user(&mut self, user_id: i64, language: &str) {
@@ -52,7 +65,7 @@ mod test {
     fn test_i18n_init() {
         // Create instance and load locales
         let mut i18n = I18n::new();
-        i18n.load_translations();
+        i18n.load_translations().unwrap();
 
         // Get a translation
         let translation = i18n.get_translation("en", "lorem");
@@ -65,7 +78,7 @@ mod test {
     fn test_user() {
         // Create instance and load locales
         let mut i18n = I18n::new();
-        i18n.load_translations();
+        i18n.load_translations().unwrap();
 
         //
         i18n.add_user(123123123123, "en");
