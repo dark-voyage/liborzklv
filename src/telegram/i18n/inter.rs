@@ -23,19 +23,13 @@ impl I18n {
             let path = safe.path();
             let file = match path.to_str() {
                 Some(c) => c,
-                None => continue
+                None => continue,
             };
 
             let mut language = Language::new();
             language.parse_translation(file);
 
-            let name = file
-                .split("/")
-                .last()
-                .unwrap()
-                .split(".")
-                .next()
-                .unwrap();
+            let name = file.split("/").last().unwrap().split(".").next().unwrap();
 
             self.languages.insert(name.to_owned(), language);
         }
