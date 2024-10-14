@@ -1,4 +1,4 @@
-pub mod i18n;
+pub mod inter;
 pub mod language;
 
 use thiserror::Error;

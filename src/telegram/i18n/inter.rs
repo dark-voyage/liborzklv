@@ -1,6 +1,6 @@
 use super::language::Language;
 use std::collections::HashMap;
-use std::io::BufRead;
+// use std::io::BufRead;
 use crate::telegram::i18n::I18nError;
 
 #[derive(Debug, Clone, Default)]

@@ -1,5 +1,6 @@
 use std::fmt::Debug;
-use teloxide::types::{InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo};
+use teloxide::types::WebAppInfo;
+use teloxide::types::{InlineKeyboardButton, InlineKeyboardMarkup};
 use url::Url;
 
 #[derive(Clone, Debug, PartialEq)]
