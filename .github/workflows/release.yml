@@ -1,9 +1,9 @@
-name: Cargo CI
+name: Release CI
 
 on:
   push:
     tags:
-      - '*'
+      - "*"
   workflow_dispatch:
 
 jobs:
@@ -12,15 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
 
-      - run: cargo publish --token ${CRATES_TOKEN}
+      - name: Push version to crates.io
+        run: nix-shell --run "cargo publish --token ${CRATES_TOKEN}"
         env:
           CRATES_TOKEN: ${{ secrets.CRATES_TOKEN }}

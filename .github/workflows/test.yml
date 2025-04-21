@@ -1,10 +1,6 @@
-name: Rust
+name: Test CI
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
@@ -14,13 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Format
-      run: cargo fmt --all -- --check
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
 
-    - name: Build
-      run: cargo build --verbose --all-features
+      - name: Format
+        run: nix-shell --run "cargo fmt --all -- --check"
 
-    - name: Run tests
-      run: cargo test --lib tests --all-features --verbose
+      - name: Build
+        run: nix-shell --run "cargo build --verbose --all-features"
+
+      - name: Run tests
+        run: nix-shell --run "cargo test --lib tests --all-features --verbose"

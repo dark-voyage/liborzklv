@@ -1,14 +1,16 @@
-<header>
-<img src="https://www.orzklv.uz/favicons/pinned.svg" alt="logo" height="100" align="left">
-<h1 style="display: inline">Orzklv</h1>
+<p align="center">
+    <img src=".github/assets/header.png" alt="Orzklv's {Library}">
+</p>
 
-Library consisting various implementation for std and libs by me
+<p align="center">
+    <h3 align="center">Library consisting various implementation for std and libs by me.</h3>
+</p>
 
-</header>
-
-[![GitHub top language](https://img.shields.io/github/languages/top/orzklv/liborzklv?style=flat-square&logo=github)](https://github.com/orzklv/liborzklv)
-[![Channel](https://img.shields.io/badge/Chat-grey?style=flat-square&logo=telegram)](https://t.me/orzklvb)
-[![Shellcheck CI](https://github.com/orzklv/liborzklv/actions/workflows/test.yml/badge.svg)](https://github.com/orzklv/liborzklv/actions/workflows/test.yml)
+<p align="center">
+    <img align="center" src="https://img.shields.io/github/languages/top/dark-voyage/liborzklv?style=flat&logo=nixos&logoColor=ffffff&labelColor=242424&color=242424" alt="Top Used Language">
+    <a href="https://github.com/dark-voyage/liborzklv/actions/workflows/test.yml"><img align="center" src="https://img.shields.io/github/actions/workflow/status/dark-voyage/liborzklv/test.yml?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Test CI"></a>
+    <a href="https://github.com/dark-voyage/liborzklv/actions/workflows/release.yml"><img align="center" src="https://img.shields.io/github/actions/workflow/status/dark-voyage/liborzklv/release.yml?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Release CI"></a>
+</p>
 
 ## About
 
@@ -16,9 +18,9 @@ It's a collection of various implementations of standard libraries and utilities
 
 ## Features
 
-- CLI additions
-- String manipulation
-- Telegram bot rich methods
+- CLI additions [[cli.rs]](./src/cli)
+- String manipulation [[string.rs]](./src/string)
+- Telegram bot rich methods [[telegram.rs]](./src/telegram)
 
 ## Using the library
 
@@ -31,3 +33,7 @@ cargo add orzklv
 ## License
 
 This project is licensed under the BSD-3 Clause License - see the [LICENSE](LICENSE) file for details.
+
+<p align="center">
+    <img src=".github/assets/footer.png" alt="Orzklv's {Library}">
+</p>
