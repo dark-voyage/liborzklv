@@ -5,14 +5,6 @@ in
     name = "liborzklv";
 
     nativeBuildInputs = with pkgs; [
-      # LLVM & GCC
-      gcc
-      cmake
-      gnumake
-      pkg-config
-      llvmPackages.llvm
-      llvmPackages.clang
-
       # Hail the Nix
       nixd
       alejandra

@@ -12,6 +12,8 @@ license = "BSD-3-Clause"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
+# For development
+# default = ["telegram"]
 telegram = [
   "dep:teloxide",
   "dep:url",
@@ -24,11 +26,11 @@ cli = []
 full = ["telegram", "string", "cli"]
 
 [dependencies]
-teloxide = { version = "0.15", optional = true }
+teloxide = { version = "0.17", optional = true }
 url = { version = "2.5", optional = true }
 tokio = { version = "1", optional = true }
 async-trait = { version = "0.1", optional = true }
-toml = { version = "0.8", optional = true }
+toml = { version = "0.9", optional = true }
 thiserror = "2"
 
 [dev-dependencies]

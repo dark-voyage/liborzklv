@@ -19,3 +19,6 @@ nohup.out
 # Added by cargo
 /target
 /.idea
+
+# Direnv
+.direnv
