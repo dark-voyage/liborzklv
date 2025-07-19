@@ -13,6 +13,7 @@ in
 
       # Launch scripts
       just
+      openssl
 
       # Rust
       rustc
@@ -23,9 +24,8 @@ in
       rust-analyzer
     ];
 
-    buildInputs = with pkgs; [
-      openssl
-    ];
+    # buildInputs = with pkgs; [
+    # ];
 
     # Set Environment Variables
     RUST_BACKTRACE = 1;
