@@ -12,7 +12,7 @@ pub trait Topics {
         T: Into<String>;
 
     /// For Telegram documentation see [`ForwardMessage`].
-    fn forward_message_tf<C, T>(
+    fn forward_message_tf<C>(
         &self,
         from_chat_id: C,
         to_chat_id: C,
@@ -46,7 +46,7 @@ impl Topics for Bot {
         }
     }
 
-    fn forward_message_tf<C, T>(
+    fn forward_message_tf<C>(
         &self,
         from_chat_id: C,
         to_chat_id: C,
